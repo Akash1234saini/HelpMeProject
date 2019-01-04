@@ -26,6 +26,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // instance
     NavigationView navigationView;
     ImageView quickAccessIcon;
     TextView quickAccessText;
