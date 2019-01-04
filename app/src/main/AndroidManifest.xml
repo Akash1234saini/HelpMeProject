@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.akashsaini.helpme">
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_laucher_xxxhdpi"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EmergencyNumbers"
+            android:label="Emergency Number"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AddSOS"
+            android:label="Select Number"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Feedback"
+            android:label="Feedback"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".SavedNumber"
+            android:label="Saved Number"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".History"
+            android:label="Call History"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".setting"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".About"
+            android:label="About"
+            android:parentActivityName=".MainActivity"></activity>
+    </application>
+
+</manifest>

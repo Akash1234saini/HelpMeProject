@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="aboutApp">
+
+        We have developed this application to help people in which there are all emergency numbers of India. You can dial these
+        numbers anytime and anywhere. It has been given a lot of activities so that you can see your <b>History</b> and your
+        <b>Recent Activities</b>. If you wish, you can save these numbers in your phone and share these numbers with others by
+        <b>Emergency Number</b> activity. What is the work of every activity for your help, it is written below. "\n\n\n"
+
+
+        <b>Features</b> "\n\n"
+        <b>SOS: </b> With the help of this button your can add any number on <b>QuickTouch</b> one by on, so that you can
+        dial any number
+        very quickly.
+        "\n"
+        "\n"
+        <b>Feedback: </b> If you would like or have some suggestion about app so you can send the feedback by click on three
+        dot which showing on home screen at top right.
+        "\n"
+        "\n"
+        <b>QuickTouch: </b> Here are all the number that you add to the help of SOS so that you can dial numbers very quickly.
+        "\n"
+        "\n"
+        <b>Recent: </b> Here are all your recent activities.
+        "\n"
+        "\n"
+        <b>Emergency Numbers: </b> Here are all Indian Emergency numbers and here you can <b>SHARE</b> and <b>SEND</b>
+        these numbers these number, <b>Just Swipe Right</b> the list item.
+        "\n"
+        "\n"
+        <b>Saved: </b> Here are all number that you saved in your phone in emergency number activity.
+        "\n"
+        "\n"
+        <b>History: </b> Here are all your call history which you can <b>DELETE</b> just swipe right.
+        "\n"
+        "\n"
+        <b>Setting: </b> Where you can delete your data.
+        "\n"
+        "\n"
+        This application is developed by developer: <b>AKASH SAINI</b>. For the purpose of help people in any kind of emergency.
+        "\n"
+        "\n"
+        <b>Developer: </b> Akash Saini
+
+    </string>
+
+</resources>
