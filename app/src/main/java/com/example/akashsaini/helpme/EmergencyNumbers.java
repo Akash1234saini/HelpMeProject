@@ -465,6 +465,8 @@ public class EmergencyNumbers extends AppCompatActivity {
 
     }
 
+
+    // we are setting data here becz we will use this number in NumberAdapter class.
     public void setData(String[] numberTitleArray, String[] numberArray) {
 
         number = new ArrayList<>();
@@ -472,11 +474,10 @@ public class EmergencyNumbers extends AppCompatActivity {
         for (int i = 0; i < numberTitleArray.length; i++) {
             number.add(new Number(getLattersOfString(numberTitleArray[i]), numberTitleArray[i], numberArray[i]));
         }
-
-
-
     }
 
+
+    // this function will return the first later of first two words of emergency numbers.
     public String getLattersOfString(String s){
 
         String[] str = s.split(" ");

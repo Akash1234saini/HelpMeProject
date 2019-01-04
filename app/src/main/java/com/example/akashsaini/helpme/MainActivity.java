@@ -44,16 +44,21 @@ public class MainActivity extends AppCompatActivity
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
+        // creating new Tab instance and assign a new layout Tab in it.
         final TabLayout.Tab quickAccess = tabLayout.newTab();
         final TabLayout.Tab recent = tabLayout.newTab();
 
+        // set string in Tabs.
         quickAccess.setText("Quick Touch");
         recent.setText("Recent");
 
+        // Creating View of custom tab layout by the help of getLayoutInflater.
         @SuppressLint("InflateParams")
         View QucikAccessView = getLayoutInflater().inflate(R.layout.custom_tab_layout, null);
+        // assign Ids of Image and Text in Tab view.
         quickAccessIcon = QucikAccessView.findViewById(R.id.tabLayoutIcon);
         quickAccessText = QucikAccessView.findViewById(R.id.tabLayoutText);
+        // get image from resource.
         quickAccessIcon.setImageResource(R.drawable.quick_touch_icon);
         quickAccessText.setText("Quick Touch");
 
@@ -66,33 +71,44 @@ public class MainActivity extends AppCompatActivity
         recentViewIcon.setImageResource(R.drawable.recent_use);
         recentViewText.setText("Recent");
 
+        // setting custom Tab view in Tab instance.
         quickAccess.setCustomView(QucikAccessView);
         recent.setCustomView(RecentView);
 
+        // set activate and non-activate color for Tab layout.
         tabLayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.tabActivate));
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.tabNonActivate));
 
+        // set positions.
         tabLayout.addTab(quickAccess, 0);
         tabLayout.addTab(recent, 1);
 
+        // By viewPager instance we're adding on Page Change Listener so whenever user will change tabs view pager change, too.
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        // get support of toolbar.
         Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // making drawable instance.
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // set and call navigation view(which will show on drawer).
         navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        // check the first item of navigation view because it is home.
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        // it will call when user will change the viewPager.
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int i, float v, int i1) {
+            public void onPageScrolled(int i, float v, int i1)
+            {
+                // this function is user to set activate and non-activate tab color and Alpha.
                 onTabChanged(i, "");
             }
 
@@ -111,6 +127,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    // this function change tab but according to name of tab.
                     onTabChanged(9, Objects.requireNonNull(tab.getText()).toString());
                 }
                 viewPager.setCurrentItem(tab.getPosition());
@@ -146,6 +163,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        // this function close the drawer if it will open and push that to starting.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

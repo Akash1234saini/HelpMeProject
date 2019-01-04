@@ -49,6 +49,7 @@ public class AddSOS extends AppCompatActivity implements  AdapterView.OnItemClic
         preferences = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         EmergencyNumbers emergencyNumbers = new EmergencyNumbers();
 
+        // this function set the number array becz we will pass this in NumberAdapter.
         emergencyNumbers.setData(numberTitleArray, numberArray);
 
 
