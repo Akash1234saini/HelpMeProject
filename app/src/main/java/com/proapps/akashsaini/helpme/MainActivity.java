@@ -1,4 +1,4 @@
-package com.example.akashsaini.helpme;
+package com.proapps.akashsaini.helpme;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -189,9 +188,6 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(this, AddSOS.class);
                 startActivity(intent);
                 break;
-            case R.id.refresh:
-                Toast.makeText(this, "" + item.getTitle(), Toast.LENGTH_SHORT).show();
-                break;
             case R.id.feedback:
                 Intent feedbackActivity = new Intent(this, Feedback.class);
                 startActivity(feedbackActivity);
@@ -234,5 +230,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        navigationView.getMenu().getItem(0).setChecked(true);
+    }
 }

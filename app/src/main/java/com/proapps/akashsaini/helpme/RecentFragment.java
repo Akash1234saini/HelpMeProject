@@ -1,28 +1,19 @@
-package com.example.akashsaini.helpme;
+package com.proapps.akashsaini.helpme;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Objects;
 
 public class RecentFragment extends Fragment {
 
@@ -69,7 +60,7 @@ public class RecentFragment extends Fragment {
         }
 
         if (Title != null && Number != null && Date != null && Time != null && recentAction != null) {
-            Log.i("recentActions", "I'm In");
+
             if (Title.size() == Number.size() && Date.size() == Time.size() && Time.size() == recentAction.size()) {
                 mRecentAction.addAll(recentAction);
                 mTitle.addAll(Title);
@@ -98,8 +89,6 @@ public class RecentFragment extends Fragment {
             }
         }
 
-        Log.i("recentActions", "Recent: " + String.valueOf(recentAction) + "\nTitle: " + String.valueOf(Title) + "\nNumber: " + String.valueOf(Number)
-                + "\nDate: " + String.valueOf(Date) + "\nTime: " + String.valueOf(Time));
 
         EmergencyNumbers emergencyNumbers = new EmergencyNumbers();
 

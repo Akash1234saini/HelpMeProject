@@ -1,4 +1,4 @@
-package com.example.akashsaini.helpme;
+package com.proapps.akashsaini.helpme;
 
 import android.Manifest;
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -208,11 +207,7 @@ public class EmergencyNumbers extends AppCompatActivity {
                                 Number.add(number.get(position).getmNumber());
                                 mDate.add(date);
                                 mTime.add(time);
-//                        Log.i("currentDate", DateFormat.getDateInstance().format(new Date()));
-//                        Log.i("currentTime", DateFormat.getTimeInstance().format(Calendar.getInstance().getTime()));
                             }
-                        Log.i("recentActions", "Recent: " + String.valueOf(recentAction) + "\nTitle: " + String.valueOf(Title) + "\nNumber: " + String.valueOf(Number)
-                                + "\nDate: " + String.valueOf(mDate) + "\nTime: " + String.valueOf(mTime));
 
                         // store call data for recent Activity
                         try {
@@ -285,12 +280,7 @@ public class EmergencyNumbers extends AppCompatActivity {
                                 Number.add(number.get(position).getmNumber());
                                 mDate.add(date);
                                 mTime.add(time);
-//                        Log.i("currentDate", DateFormat.getDateInstance().format(new Date()));
-//                        Log.i("currentTime", DateFormat.getTimeInstance().format(Calendar.getInstance().getTime()));
                             }
-                        Log.i("recentActions", "Recent: " + String.valueOf(recentAction) + "\nTitle: " + String.valueOf(Title) +
-                                "\nNumber: " + String.valueOf(Number)
-                                + "\nDate: " + String.valueOf(mDate) + "\nTime: " + String.valueOf(mTime));
 
                         // store call data for recent Activity
                         try {
@@ -373,8 +363,6 @@ public class EmergencyNumbers extends AppCompatActivity {
                         Number.add(number.get(position).getmNumber());
                         mDate.add(date);
                         mTime.add(time);
-//                        Log.i("currentDate", DateFormat.getDateInstance().format(new Date()));
-//                        Log.i("currentTime", DateFormat.getTimeInstance().format(Calendar.getInstance().getTime()));
                     }
 
                 // store call data for history Activity
@@ -431,13 +419,8 @@ public class EmergencyNumbers extends AppCompatActivity {
                         Number.add(number.get(position).getmNumber());
                         mDate.add(date);
                         mTime.add(time);
-//                        Log.i("currentDate", DateFormat.getDateInstance().format(new Date()));
-//                        Log.i("currentTime", DateFormat.getTimeInstance().format(Calendar.getInstance().getTime()));
                     }
 
-                Log.i("recentActions", "Recent: " + String.valueOf(recentAction) + "\nTitle: " + String.valueOf(Title) +
-                        "\nNumber: " + String.valueOf(Number)
-                        + "\nDate: " + String.valueOf(mDate) + "\nTime: " + String.valueOf(mTime));
                 // store call data for recent Activity
                 try {
 

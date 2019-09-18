@@ -1,4 +1,4 @@
-package com.example.akashsaini.helpme;
+package com.proapps.akashsaini.helpme;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
@@ -120,12 +120,8 @@ public class AddSOS extends AppCompatActivity implements  AdapterView.OnItemClic
                         .getmNumber());
                 mDate.add(date);
                 mTime.add(time);
-//                        Log.i("currentDate", DateFormat.getDateInstance().format(new Date()));
-//                        Log.i("currentTime", DateFormat.getTimeInstance().format(Calendar.getInstance().getTime()));
             }
 
-        Log.i("recentActions", "Recent: " + String.valueOf(recentAction) + "\nTitle: " + String.valueOf(Title) + "\nNumber: " + String.valueOf(Number)
-                + "\nDate: " + String.valueOf(mDate) + "\nTime: " + String.valueOf(mTime));
 
         // store call data for recent Activity
         try {
@@ -187,6 +183,8 @@ public class AddSOS extends AppCompatActivity implements  AdapterView.OnItemClic
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Toast.makeText(this, "Please restart the app", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

@@ -82,32 +82,12 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="30dp"
-            android:layout_toStartOf="@+id/featureLayout"
-            android:layout_toLeftOf="@+id/featureLayout"
-            android:src="@drawable/call_icon" />
-
-        <LinearLayout
-            android:id="@+id/featureLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:orientation="vertical"
-            android:weightSum="2">
-
-            <ImageView
-                android:id="@+id/infoIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/info_icon" />
-
-        </LinearLayout>
+            android:src="@drawable/call_icon"
+            android:layout_alignParentEnd="true" />
 
         <include
             android:id="@+id/orderStart"

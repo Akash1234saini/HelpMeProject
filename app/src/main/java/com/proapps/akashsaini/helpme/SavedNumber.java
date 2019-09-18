@@ -1,21 +1,16 @@
-package com.example.akashsaini.helpme;
+package com.proapps.akashsaini.helpme;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Objects;
 
 public class SavedNumber extends AppCompatActivity {
 

@@ -1,14 +1,14 @@
-package com.example.akashsaini.helpme;
+package com.proapps.akashsaini.helpme;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.opengl.ETC1;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class Feedback extends AppCompatActivity implements Button.OnClickListener{
@@ -25,7 +25,7 @@ public class Feedback extends AppCompatActivity implements Button.OnClickListene
 
         from = findViewById(R.id.from);
         message = findViewById(R.id.message);
-        Button send = findViewById(R.id.send);
+        ImageView send = findViewById(R.id.send);
 
         send.setOnClickListener(this);
     }

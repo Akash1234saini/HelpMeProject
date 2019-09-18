@@ -1,4 +1,4 @@
-package com.example.akashsaini.helpme;
+package com.proapps.akashsaini.helpme;
 
 import android.Manifest;
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,8 +85,6 @@ public class QuickAccessFragment extends Fragment {
                     }
                 }
 
-                Log.i("setsStr", "" + String.valueOf(newNumbers) + " " + (newNumbers.size() == newNumberTitleArray.size()));
-
                 for (int i = 0; i < newNumbers.size(); i++) {
                     quickAccessibleNumbers.add(new Number(emergencyNumbers.getLattersOfString(newNumberTitleArray.get(i)), newNumberTitleArray.get(i), newNumbers.get(i)));
                 }
@@ -149,8 +146,6 @@ public class QuickAccessFragment extends Fragment {
                         Number.add(quickAccessibleNumbers.get(position).getmNumber());
                         mDate.add(date);
                         mTime.add(time);
-//                        Log.i("currentDate", DateFormat.getDateInstance().format(new Date()));
-//                        Log.i("currentTime", DateFormat.getTimeInstance().format(Calendar.getInstance().getTime()));
                     }
 
                 // store call data for history Activity
@@ -209,12 +204,8 @@ public class QuickAccessFragment extends Fragment {
                         Number.add(quickAccessibleNumbers.get(position).getmNumber());
                         mDate.add(date);
                         mTime.add(time);
-//                        Log.i("currentDate", DateFormat.getDateInstance().format(new Date()));
-//                        Log.i("currentTime", DateFormat.getTimeInstance().format(Calendar.getInstance().getTime()));
                     }
 
-                Log.i("recentActions", "Recent: " + String.valueOf(recentAction) + "\nTitle: " + String.valueOf(Title) + "\nNumber: " + String.valueOf(Number)
-                        + "\nDate: " + String.valueOf(mDate) + "\nTime: " + String.valueOf(mTime));
 
                 // store call data for recent Activity
                 try {
