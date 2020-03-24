@@ -33,52 +33,15 @@ public class NumberAdapter extends ArrayAdapter<Number> {
         if (rootView == null)
             rootView = LayoutInflater.from(getContext()).inflate(R.layout.number_layout, parent, false);
 
-        TextView numberTitle = rootView.findViewById(R.id.numberTitle);
+        TextView numberTitle = rootView.findViewById(R.id.state);
         TextView number = rootView.findViewById(R.id.number);
-        TextView textIcon = rootView.findViewById(R.id.numberIcon);
-        TextView alphabet = rootView.findViewById(R.id.alphabet_list);
-        TextView orderToStart = rootView.findViewById(R.id.orderToStart);
-        ImageView star = rootView.findViewById(R.id.myFavourite);
 
         final Number currentNumber = getItem(position);
 
         assert currentNumber != null;
-
         numberTitle.setText(currentNumber.getmNumberTitle());
         number.setText(currentNumber.getmNumber());
-        textIcon.setText(currentNumber.getmNumberIcon());
 
-        alphabet.setVisibility(View.GONE);
-        orderToStart.setVisibility(View.GONE);
-        star.setVisibility(View.GONE);
-
-        if (mShowStar)
-            star.setVisibility(View.VISIBLE);
-
-        if (mShowAlphabets) {
-
-            for (int i = 65; i < 91; i++)
-                if (currentNumber.getmNumberTitle().startsWith(String.valueOf((char) i))) {
-                    alphabet.setVisibility(View.VISIBLE);
-                    alphabet.setText(String.valueOf((char) i));
-                    break;
-                } else {
-                    alphabet.setVisibility(View.GONE);
-                }
-
-            if (position > 0 && currentNumber.getmNumberTitle().startsWith(
-                    String.valueOf(EmergencyNumbers.number.get(position - 1).getmNumberTitle().charAt(0)))) {
-                alphabet.setVisibility(View.GONE);
-            }
-
-            // getting indication that order of list item changed
-            if (alphabet.getVisibility() == View.VISIBLE) {
-                orderToStart.setVisibility(View.VISIBLE);
-                orderToStart.setText(alphabet.getText());
-            } else {
-                orderToStart.setVisibility(View.GONE);
-            }
-        }
         return rootView;
     }
 }

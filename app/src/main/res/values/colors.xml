@@ -9,4 +9,8 @@
     <color name="activityBackgraound">#e6e6e6</color>
 
     <drawable name="selectedColor">#e6e600</drawable>
+
+    <!-- colors for text display in activity layout -->
+    <color name="textState">#2B3D4D</color>
+    <color name="textNumber">#B4BAC0</color>
 </resources>

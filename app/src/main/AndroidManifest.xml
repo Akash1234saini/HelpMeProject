@@ -25,33 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".EmergencyNumbers"
-            android:label="Emergency Number"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".AddSOS"
-            android:label="Select Number"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".Feedback"
-            android:label="Feedback"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".SavedNumber"
-            android:label="Saved Number"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".History"
-            android:label="Call History"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".setting"
-            android:label="Settings"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".About"
-            android:label="About"
-            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

@@ -30,4 +30,8 @@
     <string name="share">Share</string>
 
 
+    <!-- Text for display in item layout of list view -->
+    <string name="state">Utter Pradesh</string>
+    <string name="number">+918298462786</string>
+
 </resources>
