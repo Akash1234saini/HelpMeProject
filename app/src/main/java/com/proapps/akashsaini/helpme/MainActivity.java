@@ -192,6 +192,16 @@ public class MainActivity extends AppCompatActivity
                 Intent feedbackActivity = new Intent(this, Feedback.class);
                 startActivity(feedbackActivity);
                 break;
+            case R.id.share:
+                Intent shareMe = new Intent(Intent.ACTION_SEND);
+                final String appPath = "https://play.google.com/store/apps/details?id=com.proapps.akashsaini.helpme";
+
+                shareMe.setType("text/link");
+                String shareMessage = "All in one emergency solution is here download now: " + "\n" + appPath;
+                String sub = "all Emergency Numbers - HelpMe";
+                shareMe.putExtra(Intent.EXTRA_SUBJECT, sub);
+                shareMe.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareMe, "Share Via"));
         }
 
         return super.onOptionsItemSelected(item);

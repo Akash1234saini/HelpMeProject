@@ -27,6 +27,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="calling_intent_start">Calling</string>
+    <string name="share">Share</string>
 
 
 </resources>

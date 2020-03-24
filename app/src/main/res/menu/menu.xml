@@ -4,11 +4,13 @@
 
     <!-- Top left drop down menu -->
     <item android:id="@+id/feedback" android:title="@string/feedback" />
-    <item android:id="@+id/add_new_number" android:title="@string/add_new_number" android:icon="@drawable/add_new_number" app:showAsAction="always" />
+    <item android:id="@+id/add_new_number" android:title="@string/add_new_number"
+        android:icon="@drawable/add_new_number" app:showAsAction="always" />
     <!--<item android:id="@+id/searchView"-->
         <!--android:title="@string/search"-->
         <!--android:icon="@drawable/search"-->
         <!--app:showAsAction="ifRoom"-->
         <!--app:actionViewClass="android.widget.SearchView" />-->
+    <item android:id="@+id/share" android:title="@string/share" />
 
 </menu>

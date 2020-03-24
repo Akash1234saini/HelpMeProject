@@ -10,9 +10,10 @@
         android:icon="@mipmap/ic_laucher_xxxhdpi"
         android:label="@string/app_name"
         android:debuggable="false"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_laucher_hdpi"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="HardcodedDebugMode">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
