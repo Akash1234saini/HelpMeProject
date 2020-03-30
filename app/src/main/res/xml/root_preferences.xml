@@ -33,6 +33,13 @@
             android:entryValues="@array/settings_sort_by_values"
             android:key="@string/settings_sort_by_key"
             android:title="@string/settings_sort_by_label" />
+
+        <ListPreference
+            android:defaultValue="@string/settings_search_by_default"
+            android:entries="@array/settings_search_by_labels"
+            android:entryValues="@array/settings_search_by_values"
+            android:key="@string/settings_search_by_key"
+            android:title="@string/settings_search_by_label" />
     </PreferenceCategory>
 
 

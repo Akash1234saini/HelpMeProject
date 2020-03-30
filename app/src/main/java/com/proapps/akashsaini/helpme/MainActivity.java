@@ -31,11 +31,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
-
-
-//        SQLiteDatabase mSQLiteDatabase = this.openOrCreateDatabase("COVID_19_HLN", MODE_PRIVATE, null);
-//        mSQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS numbers (state TEXT, number INTEGER)");
-//        mSQLiteDatabase.execSQL("INSERT INTO numbers (state, number) VALUES ('Utter Pradesh', '8987126736')");
     }
 
     @Override

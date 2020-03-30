@@ -179,6 +179,7 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
 
                         if (task.isSuccessful()){
                             Toast.makeText(AddPublicHelplineNumberActivity.this, "Your number deleted permanently", Toast.LENGTH_SHORT).show();
+                            FirebaseAuth.getInstance().signOut();
                             launchActivity();
                         } else{
                             Toast.makeText(AddPublicHelplineNumberActivity.this, "Something wants wrong! Try Later", Toast.LENGTH_SHORT).show();
@@ -207,6 +208,7 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+        attachDatabaseReadListener();
     }
 
     @Override
@@ -215,6 +217,7 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
+        dettachDatabaseReadListener();
     }
 
     private void attachDatabaseReadListener() {

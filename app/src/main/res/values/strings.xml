@@ -68,7 +68,27 @@
     <string name="settings_sort_by_descending_label">Descending</string>
     <string name="settings_sort_by_descending_value" translatable="false">descending</string>
 
+    <!-- Strings for Search-By Preference [CHAR LIMIT=30] -->
+    <string name="settings_search_by_label">Search By</string>
+    <string name="settings_search_by_key" translatable="false">search_by</string>
+    <string name="settings_search_by_default" translatable="false">@string/settings_sort_by_ascending_value</string>
+    <!-- Label for search-by name [CHAR LIMIT=20] -->
+    <string name="settings_search_by_name_label">Name</string>
+    <string name="settings_search_by_name_value" translatable="false">name</string>
+    <!-- Label for order-by ascending option [CHAR LIMIT=20] -->
+    <string name="settings_search_by_city_label">City</string>
+    <string name="settings_search_by_city_value" translatable="false">city</string>
+    <!-- Label for order-by ascending option [CHAR LIMIT=20] -->
+    <string name="settings_search_by_state_label">State</string>
+    <string name="settings_search_by_state_value" translatable="false">state</string>
+    <!-- Label for order-by ascending option [CHAR LIMIT=20] -->
+    <string name="settings_search_by_address_label">Address</string>
+    <string name="settings_search_by_address_value" translatable="false">address</string>
+
     <!-- Search view strings -->
-    <string name="app_label">Search</string>
     <string name="search_hint">Search for name, city, state, address</string>
+
+    <!-- error or empty text view string -->
+    <string name="error_list_view">No Network (Please check your network connection)</string>
+    <string name="empty_list_view">Be the first to add number!</string>
 </resources>

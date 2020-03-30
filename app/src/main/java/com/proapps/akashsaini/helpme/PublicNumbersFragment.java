@@ -9,6 +9,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -42,6 +49,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -65,10 +74,15 @@ public class PublicNumbersFragment extends Fragment {
 
     Intent callIntent;
 
+    TextView mErrorTextView;
+
+    // Instance of NetworkInfo and NetworkManager to check weather if internet i connected or not.
+    NetworkInfo networkInfo;
+    ConnectivityManager conMgr;
+
     public PublicNumbersFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,6 +103,12 @@ public class PublicNumbersFragment extends Fragment {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUserReference = mFirebaseDatabase.getReference();
+        mErrorTextView = rootView.findViewById(R.id.errorTextView);
+
+        mNumberListView.setEmptyView(mErrorTextView);
+
+        // Get a reference to the connectivity manager to check the state of network connectivity
+        conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Initialize message ListView and its adapter
         publicNumbers = new ArrayList<>();
@@ -98,24 +118,14 @@ public class PublicNumbersFragment extends Fragment {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-
-                    // user is sighed in
-                    onSignedInInitialize();
-
-                } else{
-
-                    // user is signed out
-                    onSignedInInitialize();
-                }
+                onSignedInInitialize();
             }
         };
 
         mNumberListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-                final SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("AlertDialogPublicNumberCheckBox", Context.MODE_PRIVATE);
+                final SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("AlertDialogPublicNumberCheckBox", MODE_PRIVATE);
                 boolean isChecked = sharedPreferences.getBoolean("AlertDialogPublicNumberCheckBox", false);
 
                 if (!isChecked) {
@@ -329,6 +339,16 @@ public class PublicNumbersFragment extends Fragment {
         FirebaseAuth.getInstance().addAuthStateListener(mAuthStateListener);
         fragmentNumberAdapter.clear();
         attachDatabaseReadListener();
+
+        // Get details on the currently active default data network
+        assert conMgr != null;
+        networkInfo = conMgr.getActiveNetworkInfo();
+
+        // If there is not network connection, fetch data
+        if (networkInfo == null || !networkInfo.isConnected()){
+            mErrorTextView.setText(R.string.error_list_view);
+        } else if (publicNumbers.size() == 0)
+            mErrorTextView.setText(R.string.empty_list_view);
     }
 
     @Override
@@ -352,6 +372,43 @@ public class PublicNumbersFragment extends Fragment {
 
                     Log.i(TAG, "after loop");
                     fragmentNumberAdapter.notifyDataSetChanged();
+
+                    if (publicNumbers.size() != 0)
+                        mErrorTextView.setText("");
+                    else {
+                        mErrorTextView.setText(R.string.empty_list_view);
+                        Log.i(TAG, "Empty");
+                    }
+
+                    SQLiteDatabase mSQLiteDatabase = null;
+                    try {
+                        mSQLiteDatabase = Objects.requireNonNull(getContext()).openOrCreateDatabase("COVID_19_HLN", MODE_PRIVATE, null);
+                        mSQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS public_numbers (name TEXT, mobile1 INTEGER, mobile2 INTEGER DEFAULT \"N/A\"," +
+                                " state TEXT, pin TEXT DEFAULT \"N/A\"," +
+                                " city TEXT, address1 TEXT, address2 TEXT DEFAULT \"N/A\")");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (mSQLiteDatabase != null){
+                        int publicNumbersSize = publicNumbers.size();
+                        while (publicNumbersSize != 0) {
+                            String sqlQuery = "'" + publicNumbers.get(publicNumbersSize - 1).getmName() + "', '"
+                                    + publicNumbers.get(publicNumbersSize - 1).getmMob1() + "', '"
+                                    + publicNumbers.get(publicNumbersSize - 1).getmMob2() + "', '"
+                                    + publicNumbers.get(publicNumbersSize - 1).getmState() + "', '"
+                                    + publicNumbers.get(publicNumbersSize - 1).getmPin() + "', '"
+                                    + publicNumbers.get(publicNumbersSize - 1).getmCity() + "', '"
+                                    + publicNumbers.get(publicNumbersSize - 1).getmAddr1() + "', '"
+                                    + publicNumbers.get(publicNumbersSize - 1).getmAddr2() + "'";
+                            mSQLiteDatabase.execSQL("INSERT INTO public_numbers (name, mobile1, mobile2, state, pin, city, address1, address2) VALUES (" + sqlQuery + ")");
+                            publicNumbersSize--;
+                        }
+                        Log.i(TAG, "size of sql database : " + mSQLiteDatabase.getSyncedTables().size());
+                    }
+
+
 
                     SharedPreferences sharedPres = PreferenceManager.getDefaultSharedPreferences(getContext());
                     String sortBy = sharedPres.getString(
