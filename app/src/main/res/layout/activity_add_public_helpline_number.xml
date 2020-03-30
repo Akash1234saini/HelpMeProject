@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddPublicHelplineNumberActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/AddPublicNumberStyle"
+            android:text="Overview"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/nameEditText"
+                android:hint="*Name"
+                android:singleLine="true"
+                android:inputType="textPersonName|textCapWords"
+                style="@style/EditorFieldStyle"/>
+
+            <EditText
+                android:id="@+id/phone1EditText"
+                android:hint="*Mobile No.1"
+                android:singleLine="true"
+                android:inputType="phone|textCapWords"
+                style="@style/EditorFieldStyle"/>
+
+            <EditText
+                android:id="@+id/phone2EditText"
+                android:hint="Mobile No.2"
+                android:singleLine="true"
+                android:inputType="phone|textCapWords"
+                style="@style/EditorFieldStyle"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            style="@style/AddPublicNumberStyle"
+            android:text="Address"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/stateEditText"
+                android:hint="*State"
+                android:singleLine="true"
+                android:inputType="text|textCapWords"
+                style="@style/EditorFieldStyle"/>
+
+            <EditText
+                android:id="@+id/pinEditText"
+                android:hint="Pin"
+                android:singleLine="true"
+                android:inputType="number|textCapWords"
+                style="@style/EditorFieldStyle"/>
+
+            <EditText
+                android:id="@+id/cityEditText"
+                android:hint="*City"
+                android:singleLine="true"
+                android:inputType="text|textCapWords"
+                style="@style/EditorFieldStyle"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/addressLine1EditText"
+        android:hint="*Address Line 1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:singleLine="true"
+        android:inputType="text|textCapWords"
+        style="@style/EditorFieldStyle"/>
+
+    <EditText
+        android:id="@+id/addressLine2EditText"
+        android:hint="Address Line 2"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:singleLine="true"
+        android:inputType="text|textCapWords"
+        style="@style/EditorFieldStyle"/>
+</LinearLayout>

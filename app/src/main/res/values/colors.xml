@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ff0000</color>
-    <color name="colorPrimaryDark">#8b0000</color>
-    <color name="colorAccent">#FFB1B1B2</color>
-
-    <color name="tabActivate">#ff1587</color>
-    <color name="tabNonActivate">#ffffff</color>
-    <color name="activityBackgraound">#e6e6e6</color>
+    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <color name="colorAccent">#9C27B0</color>
 
     <drawable name="selectedColor">#e6e600</drawable>
 
     <!-- colors for text display in activity layout -->
     <color name="textState">#2B3D4D</color>
     <color name="textNumber">#B4BAC0</color>
+
+
+    <color name="AddPublicNumberColorPrimary">#4E4C4C</color>
+    <color name="AddPublicNumberColorPrimaryDark">#313131</color>
+
+    <!-- colors for text display in activity layout -->
+    <color name="colorUserName">#2B3D4D</color>
+    <color name="colorUserDetailKey">#B4BAC0</color>
+    <color name="colorUserDetailValue">#6D6D6D</color>
+    <color name="colorUserNumber">#B9BEC2</color>
 </resources>

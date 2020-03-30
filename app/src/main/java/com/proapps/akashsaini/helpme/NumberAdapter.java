@@ -1,28 +1,24 @@
 package com.proapps.akashsaini.helpme;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
 public class NumberAdapter extends ArrayAdapter<Number> {
 
     private Context mContext;
-    private boolean mShowAlphabets;
-    private boolean mShowStar;
 
-    NumberAdapter(Activity context, ArrayList<Number> numbers, boolean showAlphabets, boolean showStar) {
+    NumberAdapter(AppCompatActivity context, ArrayList<Number> numbers) {
         super(context, 0 , numbers);
         mContext  = context;
-        mShowAlphabets = showAlphabets;
-        mShowStar = showStar;
     }
 
     @NonNull

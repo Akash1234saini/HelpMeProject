@@ -4,24 +4,43 @@
     package="com.proapps.akashsaini.helpme">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_laucher_xxxhdpi"
-        android:label="@string/app_name"
         android:debuggable="false"
-        android:roundIcon="@mipmap/ic_laucher_hdpi"
+        android:icon="@mipmap/ic_launcher_png"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_png"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="HardcodedDebugMode">
         <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/SettingsTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.proapps.akashsaini.helpme.MainActivity" />
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gsm.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544-3347611713" />
+
+        <activity
+            android:name=".AddPublicHelplineNumberActivity"
+            android:label="@string/add_public_number_label"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AddPublicNumberTheme" />
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
