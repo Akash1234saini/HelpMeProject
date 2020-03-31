@@ -91,4 +91,10 @@
     <!-- error or empty text view string -->
     <string name="error_list_view">No Network (Please check your network connection)</string>
     <string name="empty_list_view">Be the first to add number!</string>
+
+    <!-- toast msg to indicates that user have only already leaded data text view string -->
+    <string name="offline_sql_data_loaded">No Network!\nbut still we have loaded offline data.</string>
+
+    <!-- toast msg to indicates that user can't upload data to database text view string -->
+    <string name="enable_to_upload_data">No Network!\nplease check your internet and back again</string>
 </resources>

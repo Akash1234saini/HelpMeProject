@@ -1,8 +1,14 @@
 package com.proapps.akashsaini.helpme;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,7 +55,16 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
     private ChildEventListener mChildEventListener;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    DatabaseReference userDetailRef;
+    private DatabaseReference userDetailRef;
+    
+    // No network connection toast
+    private Toast mNoNetworkToast;
+
+    // Instance of NetworkInfo and NetworkManager to check weather if internet i connected or not.
+    NetworkInfo networkInfo;
+    ConnectivityManager conMgr;
+
+    SQLiteDatabase mSQLiteDatabase = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +79,23 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
         mCityEditText = (EditText) findViewById(R.id.cityEditText);
         mAddressLine1EditText = (EditText) findViewById(R.id.addressLine1EditText);
         mAddressLine2EditText = (EditText) findViewById(R.id.addressLine2EditText);
-
+        
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUserReference = mFirebaseDatabase.getReference("users");
         mUserDetailReference = mFirebaseDatabase.getReference();
         mUser = mFirebaseAuth.getCurrentUser();
+        
+        mNoNetworkToast = Toast.makeText(this, R.string.enable_to_upload_data, Toast.LENGTH_LONG);
 
+        // Get a reference to the connectivity manager to check the state of network connectivity
+        conMgr = (ConnectivityManager) Objects.requireNonNull(this).getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        boolean noNetwork = checkNetworkConnection();
+        if (!noNetwork) {
+            mNoNetworkToast.show();
+            loadOfflineData();
+        }
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -101,6 +126,38 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
         userDetailRef = mFirebaseDatabase.getReference("users");
     }
 
+    private boolean checkNetworkConnection() {
+
+        // Get details on the currently active default data network
+        assert conMgr != null;
+        networkInfo = conMgr.getActiveNetworkInfo();
+
+        // If there is not network connection, fetch data
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    private void loadOfflineData() {
+        mSQLiteDatabase = Objects.requireNonNull(this).openOrCreateDatabase("COVID_19_HLN", MODE_PRIVATE, null);
+        String countQuery = "SELECT * FROM public_numbers";
+        Cursor cursor = mSQLiteDatabase.rawQuery(countQuery, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                String name = cursor.getString(cursor.getColumnIndex("name"));
+                String mobile1 = cursor.getString(cursor.getColumnIndex("mobile1"));
+                String mobile2 = cursor.getString(cursor.getColumnIndex("mobile2"));
+                String state = cursor.getString(cursor.getColumnIndex("state"));
+                String pin = cursor.getString(cursor.getColumnIndex("pin"));
+                String city = cursor.getString(cursor.getColumnIndex("city"));
+                String address1 = cursor.getString(cursor.getColumnIndex("address1"));
+                String address2 = cursor.getString(cursor.getColumnIndex("address2"));
+
+                assignDataInEditors(name, mobile1, mobile2, state, pin, city, address1, address2);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+    }
+
     private void fillUserDataInEditors() {
         attachDatabaseReadListener();
     }
@@ -117,13 +174,24 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_add:
 
-                boolean isAllRight = checkMandatoryFields();
-                if (isAllRight){
-                    uploadingTask();
+                boolean noNetwork = checkNetworkConnection();
+                if (!noNetwork){
+                    mNoNetworkToast.show();
+                } else{
+                    boolean isAllRight = checkMandatoryFields();
+                    if (isAllRight){
+                        uploadingTask();
+                    }
                 }
                 break;
             case R.id.action_delete:
-                deletingTask();
+
+                noNetwork = checkNetworkConnection();
+                if (!noNetwork){
+                    mNoNetworkToast.show();
+                } else{
+                    deletingTask();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -226,15 +294,10 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     AddPublicNumber publicNumber = dataSnapshot.child(mUser.getUid()).getValue(AddPublicNumber.class);
-                    assert publicNumber != null;
-                    mNameEditText.setText(publicNumber.getmName());
-                    mMobile1EditText.setText(publicNumber.getmMob1());
-                    mMobile2EditText.setText(publicNumber.getmMob2());
-                    mStateEditText.setText(publicNumber.getmState());
-                    mPinEditText.setText(publicNumber.getmPin());
-                    mCityEditText.setText(publicNumber.getmCity());
-                    mAddressLine1EditText.setText(publicNumber.getmAddr1());
-                    mAddressLine2EditText.setText(publicNumber.getmAddr2());
+                    if (publicNumber != null) {
+                        assignDataInEditors(publicNumber.getmName(), publicNumber.getmMob1(), publicNumber.getmMob2(), publicNumber.getmState(), publicNumber.getmPin(),
+                                publicNumber.getmCity(), publicNumber.getmAddr1(), publicNumber.getmAddr2());
+                    }
                 }
 
                 @Override
@@ -248,6 +311,17 @@ public class AddPublicHelplineNumberActivity extends AppCompatActivity {
             };
             mUserDetailReference.addChildEventListener(mChildEventListener);
         }
+    }
+
+    private void assignDataInEditors(String name, String mob1, String mob2, String state, String pin, String city, String addr1, String addr2) {
+        mNameEditText.setText(name);
+        mMobile1EditText.setText(mob1);
+        mMobile2EditText.setText(mob2);
+        mStateEditText.setText(state);
+        mPinEditText.setText(pin);
+        mCityEditText.setText(city);
+        mAddressLine1EditText.setText(addr1);
+        mAddressLine2EditText.setText(addr2);
     }
 
     private void dettachDatabaseReadListener(){

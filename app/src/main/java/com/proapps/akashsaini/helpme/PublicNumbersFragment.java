@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -48,7 +49,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -80,6 +83,8 @@ public class PublicNumbersFragment extends Fragment {
     NetworkInfo networkInfo;
     ConnectivityManager conMgr;
 
+    SQLiteDatabase mSQLiteDatabase = null;
+
     public PublicNumbersFragment() {
         // Required empty public constructor
     }
@@ -108,7 +113,7 @@ public class PublicNumbersFragment extends Fragment {
         mNumberListView.setEmptyView(mErrorTextView);
 
         // Get a reference to the connectivity manager to check the state of network connectivity
-        conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        conMgr = (ConnectivityManager) Objects.requireNonNull(getContext()).getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Initialize message ListView and its adapter
         publicNumbers = new ArrayList<>();
@@ -347,8 +352,37 @@ public class PublicNumbersFragment extends Fragment {
         // If there is not network connection, fetch data
         if (networkInfo == null || !networkInfo.isConnected()){
             mErrorTextView.setText(R.string.error_list_view);
+            loadOfflineData();
         } else if (publicNumbers.size() == 0)
             mErrorTextView.setText(R.string.empty_list_view);
+    }
+
+    private void loadOfflineData() {
+        mSQLiteDatabase = Objects.requireNonNull(getContext()).openOrCreateDatabase("COVID_19_HLN", MODE_PRIVATE, null);
+        String countQuery = "SELECT * FROM public_numbers";
+        Cursor cursor = mSQLiteDatabase.rawQuery(countQuery, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                String user_id = cursor.getString(cursor.getColumnIndex("user_id"));
+                String name = cursor.getString(cursor.getColumnIndex("name"));
+                String mobile1 = cursor.getString(cursor.getColumnIndex("mobile1"));
+                String mobile2 = cursor.getString(cursor.getColumnIndex("mobile2"));
+                String state = cursor.getString(cursor.getColumnIndex("state"));
+                String pin = cursor.getString(cursor.getColumnIndex("pin"));
+                String city = cursor.getString(cursor.getColumnIndex("city"));
+                String addreess1 = cursor.getString(cursor.getColumnIndex("address1"));
+                String address2 = cursor.getString(cursor.getColumnIndex("address2"));
+
+                Log.i(TAG, "uid: " + user_id + ", name: " + name + ", mobile1: " + mobile1 + ", mobile2: " + mobile2 + ", state: " +
+                        state + ", pin: " + pin + ", city: " + city + ", address1: " + addreess1 + ", address2: " + address2);
+
+                publicNumbers.add(new AddPublicNumber(user_id, name, mobile1, mobile2, state, pin, city, addreess1, address2));
+                fragmentNumberAdapter.notifyDataSetChanged();
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        Toast.makeText(getContext(), R.string.offline_sql_data_loaded, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -380,12 +414,12 @@ public class PublicNumbersFragment extends Fragment {
                         Log.i(TAG, "Empty");
                     }
 
-                    SQLiteDatabase mSQLiteDatabase = null;
                     try {
                         mSQLiteDatabase = Objects.requireNonNull(getContext()).openOrCreateDatabase("COVID_19_HLN", MODE_PRIVATE, null);
-                        mSQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS public_numbers (name TEXT, mobile1 INTEGER, mobile2 INTEGER DEFAULT \"N/A\"," +
-                                " state TEXT, pin TEXT DEFAULT \"N/A\"," +
-                                " city TEXT, address1 TEXT, address2 TEXT DEFAULT \"N/A\")");
+                        mSQLiteDatabase.execSQL("DROP TABLE IF EXISTS public_numbers");
+                        mSQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS public_numbers (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, user_id TEXT, name TEXT," +
+                                " mobile1 INTEGER, mobile2 INTEGER DEFAULT \"N/A\", state TEXT, pin TEXT DEFAULT \"N/A\", city TEXT, address1 TEXT," +
+                                " address2 TEXT DEFAULT \"N/A\")");
                     } catch (SQLException e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -394,7 +428,8 @@ public class PublicNumbersFragment extends Fragment {
                     if (mSQLiteDatabase != null){
                         int publicNumbersSize = publicNumbers.size();
                         while (publicNumbersSize != 0) {
-                            String sqlQuery = "'" + publicNumbers.get(publicNumbersSize - 1).getmName() + "', '"
+                            String sqlQuery = "'" + publicNumbers.get(publicNumbersSize - 1).getmUserUID() + "', '"
+                                    + publicNumbers.get(publicNumbersSize - 1).getmName() + "', '"
                                     + publicNumbers.get(publicNumbersSize - 1).getmMob1() + "', '"
                                     + publicNumbers.get(publicNumbersSize - 1).getmMob2() + "', '"
                                     + publicNumbers.get(publicNumbersSize - 1).getmState() + "', '"
@@ -402,13 +437,11 @@ public class PublicNumbersFragment extends Fragment {
                                     + publicNumbers.get(publicNumbersSize - 1).getmCity() + "', '"
                                     + publicNumbers.get(publicNumbersSize - 1).getmAddr1() + "', '"
                                     + publicNumbers.get(publicNumbersSize - 1).getmAddr2() + "'";
-                            mSQLiteDatabase.execSQL("INSERT INTO public_numbers (name, mobile1, mobile2, state, pin, city, address1, address2) VALUES (" + sqlQuery + ")");
+                            mSQLiteDatabase.execSQL("INSERT INTO public_numbers (user_id, name, mobile1, mobile2, state, pin, city, address1, address2)" +
+                                    " VALUES (" + sqlQuery + ")");
                             publicNumbersSize--;
                         }
-                        Log.i(TAG, "size of sql database : " + mSQLiteDatabase.getSyncedTables().size());
                     }
-
-
 
                     SharedPreferences sharedPres = PreferenceManager.getDefaultSharedPreferences(getContext());
                     String sortBy = sharedPres.getString(

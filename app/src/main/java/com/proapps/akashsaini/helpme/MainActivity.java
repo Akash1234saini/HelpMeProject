@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_signout:
                 FirebaseAuth.getInstance().signOut();
+                Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_setting:
                 Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
