@@ -86,7 +86,7 @@
     <string name="settings_search_by_address_value" translatable="false">address</string>
 
     <!-- Search view strings -->
-    <string name="search_hint">Search for name, city, state, address</string>
+    <string name="search_hint">Search for any detail…</string>
 
     <!-- error or empty text view string -->
     <string name="error_list_view">No Network (Please check your network connection)</string>
@@ -97,4 +97,20 @@
 
     <!-- toast msg to indicates that user can't upload data to database text view string -->
     <string name="enable_to_upload_data">No Network!\nplease check your internet and back again</string>
+
+    <!-- no network text for search activity string -->
+    <string name="connect_net_for_more_result">You\'re searching offline, please connect your internet to get more result</string>
+    <!-- no result text for search activity string -->
+    <string name="no_result_found">No result found</string>
+
+    <!-- strings to explain about application features T&C and more-->
+    <!-- main heading -->
+    <string name="why_app_developed_for">What is this application for?</string>
+    <!-- heading paragraph -->
+    <string name="this_app_is_for">The purpose of this application is to serve only those people who are trapped in some trouble due to Corona virus.
+        This application can also be punished if used for any wrongdoing. If you want to help someone or you are in trouble yourself then this application is for you.
+        How to use this application?  Its complete information is given below and if you want more information, you can contact us in the following manner and you can
+        know more about this application and all our data is given below.  You can contact us via email, whatsApp or facebook.</string>
+
+
 </resources>

@@ -67,23 +67,23 @@ public class PublicNumbersFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     private ListView mNumberListView;
-    private FirebaseNumberAdapter fragmentNumberAdapter;
 
     private final static String TAG = PublicNumbersFragment.class.getSimpleName();
 
-    ArrayList<AddPublicNumber> publicNumbers;
+    private ArrayList<AddPublicNumber> publicNumbers;
+    private FirebaseNumberAdapter fragmentNumberAdapter;
 
     private static final int REQUEST_CODE_CALL_PHONE = 1001;
 
-    Intent callIntent;
+    private Intent callIntent;
 
-    TextView mErrorTextView;
+    private TextView mErrorTextView;
 
     // Instance of NetworkInfo and NetworkManager to check weather if internet i connected or not.
-    NetworkInfo networkInfo;
-    ConnectivityManager conMgr;
+    private NetworkInfo networkInfo;
+    private ConnectivityManager conMgr;
 
-    SQLiteDatabase mSQLiteDatabase = null;
+    private SQLiteDatabase mSQLiteDatabase = null;
 
     public PublicNumbersFragment() {
         // Required empty public constructor
@@ -343,6 +343,7 @@ public class PublicNumbersFragment extends Fragment {
         super.onResume();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthStateListener);
         fragmentNumberAdapter.clear();
+        Log.i(TAG, "before attach method");
         attachDatabaseReadListener();
 
         // Get details on the currently active default data network
@@ -351,10 +352,13 @@ public class PublicNumbersFragment extends Fragment {
 
         // If there is not network connection, fetch data
         if (networkInfo == null || !networkInfo.isConnected()){
+            Log.i(TAG, "in no network");
             mErrorTextView.setText(R.string.error_list_view);
             loadOfflineData();
-        } else if (publicNumbers.size() == 0)
+        } else if (publicNumbers.size() == 0) {
+            Log.i(TAG, "network connected");
             mErrorTextView.setText(R.string.empty_list_view);
+        }
     }
 
     private void loadOfflineData() {
@@ -393,55 +397,65 @@ public class PublicNumbersFragment extends Fragment {
     }
 
     private void attachDatabaseReadListener() {
+        Log.i(TAG, "in attach method");
         if (mChildEventListener == null){
             mChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     publicNumbers.clear();
-                    Log.i(TAG, "dataSnaps");
+                    Log.i(TAG, "after clear publicNumber data");
                     for (DataSnapshot snaps: dataSnapshot.getChildren()){
                         publicNumbers.add(snaps.getValue(AddPublicNumber.class));
+                        Log.i(TAG, "values of public number array list: " + publicNumbers.get(publicNumbers.size()-1).toString());
                         Log.i(TAG, "in loop");
                     }
 
-                    Log.i(TAG, "after loop");
                     fragmentNumberAdapter.notifyDataSetChanged();
 
-                    if (publicNumbers.size() != 0)
+                    Log.i(TAG, "after loop, size of public number array list: " + publicNumbers.size());
+
+                    if (publicNumbers.size() != 0) {
                         mErrorTextView.setText("");
-                    else {
+                        Log.i(TAG, "set error msg nothing");
+                    } else{
                         mErrorTextView.setText(R.string.empty_list_view);
                         Log.i(TAG, "Empty");
                     }
 
                     try {
+                        Log.i(TAG, "in try catch");
                         mSQLiteDatabase = Objects.requireNonNull(getContext()).openOrCreateDatabase("COVID_19_HLN", MODE_PRIVATE, null);
                         mSQLiteDatabase.execSQL("DROP TABLE IF EXISTS public_numbers");
                         mSQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS public_numbers (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, user_id TEXT, name TEXT," +
                                 " mobile1 INTEGER, mobile2 INTEGER DEFAULT \"N/A\", state TEXT, pin TEXT DEFAULT \"N/A\", city TEXT, address1 TEXT," +
                                 " address2 TEXT DEFAULT \"N/A\")");
+                        Log.i(TAG, "new table created");
                     } catch (SQLException e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                     if (mSQLiteDatabase != null){
-                        int publicNumbersSize = publicNumbers.size();
-                        while (publicNumbersSize != 0) {
-                            String sqlQuery = "'" + publicNumbers.get(publicNumbersSize - 1).getmUserUID() + "', '"
-                                    + publicNumbers.get(publicNumbersSize - 1).getmName() + "', '"
-                                    + publicNumbers.get(publicNumbersSize - 1).getmMob1() + "', '"
-                                    + publicNumbers.get(publicNumbersSize - 1).getmMob2() + "', '"
-                                    + publicNumbers.get(publicNumbersSize - 1).getmState() + "', '"
-                                    + publicNumbers.get(publicNumbersSize - 1).getmPin() + "', '"
-                                    + publicNumbers.get(publicNumbersSize - 1).getmCity() + "', '"
-                                    + publicNumbers.get(publicNumbersSize - 1).getmAddr1() + "', '"
-                                    + publicNumbers.get(publicNumbersSize - 1).getmAddr2() + "'";
+                        int publicNumbersSize = 0;
+                        Log.i(TAG, "sqlite not null");
+                        while (publicNumbersSize != publicNumbers.size()) {
+                            Log.i(TAG, "in while, pn size: " + publicNumbersSize);
+                            String sqlQuery = "'" + publicNumbers.get(publicNumbersSize).getmUserUID() + "', '"
+                                    + publicNumbers.get(publicNumbersSize).getmName() + "', '"
+                                    + publicNumbers.get(publicNumbersSize).getmMob1() + "', '"
+                                    + publicNumbers.get(publicNumbersSize).getmMob2() + "', '"
+                                    + publicNumbers.get(publicNumbersSize).getmState() + "', '"
+                                    + publicNumbers.get(publicNumbersSize).getmPin() + "', '"
+                                    + publicNumbers.get(publicNumbersSize).getmCity() + "', '"
+                                    + publicNumbers.get(publicNumbersSize).getmAddr1() + "', '"
+                                    + publicNumbers.get(publicNumbersSize).getmAddr2() + "'";
                             mSQLiteDatabase.execSQL("INSERT INTO public_numbers (user_id, name, mobile1, mobile2, state, pin, city, address1, address2)" +
                                     " VALUES (" + sqlQuery + ")");
-                            publicNumbersSize--;
+                            publicNumbersSize++;
+                            Log.i(TAG, "value attached: pn size: " + publicNumbersSize);
                         }
                     }
+                    Log.i(TAG, "data inserted into table");
 
                     SharedPreferences sharedPres = PreferenceManager.getDefaultSharedPreferences(getContext());
                     String sortBy = sharedPres.getString(

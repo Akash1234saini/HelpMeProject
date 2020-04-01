@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" android:theme="@style/SearchTheme" android:parentActivityName=".MainActivity"
+            android:label="">
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"

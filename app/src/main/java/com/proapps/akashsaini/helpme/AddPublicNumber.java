@@ -4,15 +4,15 @@ import java.util.Comparator;
 
 public class AddPublicNumber {
 
-    private String mUserUID;
-    private String mName;
-    private String mMob1;
-    private String mMob2;
-    private String mState;
-    private String mPin;
-    private String mCity;
-    private String mAddr1;
-    private String mAddr2;
+    private static String mUserUID;
+    private static String mName;
+    private static String mMob1;
+    private static String mMob2;
+    private static String mState;
+    private static String mPin;
+    private static String mCity;
+    private static String mAddr1;
+    private static String mAddr2;
 
     public AddPublicNumber(){
 
@@ -64,6 +64,10 @@ public class AddPublicNumber {
 
     public String getmAddr2() {
         return mAddr2;
+    }
+
+    public String toString(){
+        return mName + ", " + mMob1 + ", " + mMob2 + ", " + mState + ", " + mPin + ", " + mCity + ", " + mAddr1 + ", " + mAddr2;
     }
 
     /*Comparator for sorting in ascending order the list by Public Number Name*/
@@ -145,4 +149,26 @@ public class AddPublicNumber {
 
             return add2.compareTo(add1);
         }};
+
+    /* Comparing string to the all elements of an public number class's variables */
+    public static boolean compareString(String data, AddPublicNumber number){
+        if (data.toLowerCase().equals(number.getmName().toLowerCase()))
+            return true;
+        else if (data.toLowerCase().equals(number.getmMob1().toLowerCase()))
+            return true;
+        else if (data.toLowerCase().equals(number.getmMob2().toLowerCase()))
+            return true;
+        else if (data.toLowerCase().equals(number.getmState().toLowerCase()))
+            return true;
+        else if (data.toLowerCase().equals(number.getmPin().toLowerCase()))
+            return true;
+        else if (data.toLowerCase().equals(number.getmCity().toLowerCase()))
+            return true;
+        else if (data.toLowerCase().equals(number.getmAddr1().toLowerCase()))
+            return true;
+        else if (data.toLowerCase().equals(number.getmAddr2().toLowerCase()))
+            return true;
+        else
+            return false;
+    }
 }

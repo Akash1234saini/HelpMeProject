@@ -19,4 +19,9 @@
     <color name="colorUserDetailKey">#B4BAC0</color>
     <color name="colorUserDetailValue">#6D6D6D</color>
     <color name="colorUserNumber">#B9BEC2</color>
+
+    <color name="searchColorPrimary">#F5F5F5</color>
+    <color name="searchColorPrimaryDark">#000000</color>
+    <color name="searchColorAccent">#535353</color>
+    <color name="searchHint">#A2A0A0</color>
 </resources>

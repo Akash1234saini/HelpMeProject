@@ -48,4 +48,11 @@
         <item name="colorPrimaryDark">@color/AddPublicNumberColorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="SearchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/searchColorPrimary</item>
+        <item name="colorPrimaryDark">@color/searchColorPrimaryDark</item>
+        <item name="colorAccent">@color/searchColorAccent</item>
+
+    </style>
 </resources>

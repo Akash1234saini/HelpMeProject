@@ -1,5 +1,6 @@
 package com.proapps.akashsaini.helpme;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
 public class FirebaseNumberAdapter extends ArrayAdapter<AddPublicNumber> {
 
+    private static final String TAG = FirebaseNumberAdapter.class.getSimpleName();
 
     public FirebaseNumberAdapter(AppCompatActivity context, ArrayList<AddPublicNumber> publicNumbers) {
         super(context, 0, publicNumbers);
@@ -45,6 +47,8 @@ public class FirebaseNumberAdapter extends ArrayAdapter<AddPublicNumber> {
         city.setText(currentNumber.getmCity());
         address1.setText(currentNumber.getmAddr1());
         address2.setText(currentNumber.getmAddr2());
+
+        Log.i(TAG, "uid: " + currentNumber.getmName());
 
         return rootView;
     }
